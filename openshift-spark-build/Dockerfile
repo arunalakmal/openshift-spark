@@ -23,6 +23,9 @@
 
     USER root
 
+    RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+        sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && yum update -y
+
 ###### START module 'common:1.0'
 ###### \
         # Copy 'common' module content
@@ -55,7 +58,7 @@
 ###### \
         # Copy 'spark' module general artifacts
         COPY \
-            spark-3.0.1-bin-hadoop3.2.tgz \
+            spark-3.4.0-bin-hadoop3.tgz \
             /tmp/artifacts/
         # Copy 'spark' module content
         COPY modules/spark /tmp/scripts/spark
@@ -113,7 +116,7 @@
             io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"  \
             maintainer="Trevor McKay <tmckay@redhat.com>"  \
             name="radanalyticsio/openshift-spark"  \
-            sparkversion="3.0.1"  \
+            sparkversion="3.4.0"  \
             version="3.0" 
 ###### /
 ###### END image 'radanalyticsio/openshift-spark:3.0'
